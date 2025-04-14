@@ -663,7 +663,7 @@ $GLOBALS_METADATA = array(
         'allow_debug_language' => array(
             xl('Allow Debugging Language'),
             'bool',                           // data type
-            '1',                              // default = true during development and false for production releases
+            '0',                              // default = true during development and false for production releases
             xl('This will allow selection of the debugging (\'dummy\') language.')
         ),
 
@@ -1792,7 +1792,6 @@ $GLOBALS_METADATA = array(
                 '2' => xl('Last name, first name'),
                 '3' => xl('Last name, first name (title)'),
                 '4' => xl('Last name, first name (title: comments)'),
-                '5' => xl('Last name, first name, address (title: comments)')
             ),
             '2',                               // default
             xl('This determines how appointments display on the calendar.')
@@ -2828,12 +2827,7 @@ $GLOBALS_METADATA = array(
             '1',                              // default
             xl('Enable logging of ordering activities.') . ' (' . xl('Note that Audit Logging needs to be enabled above') . ')'
         ),
-        'audit_events_lab-results' => array(
-            xl('Audit Logging Lab Results'),
-            'bool',                           // data type
-            '1',                              // default
-            xl('Enable logging of lab result activities.') . ' (' . xl('Note that Audit Logging needs to be enabled above') . ')'
-        ),
+
         'audit_events_security-administration' => array(
             xl('Audit Logging Security Administration'),
             'bool',                           // data type
@@ -2868,12 +2862,7 @@ $GLOBALS_METADATA = array(
             '0',                              // default
             xl('Enable logging of CDR Engine Queries.') . ' (' . xl('Note that Audit Logging needs to be enabled above') . ')'
         ),
-        'audit_events_http-request' => array(
-            xl('Audit Logging user page history.'),
-            'bool',                           // data type
-            '1',                              // turn it on by default for better traceability in the logs
-            xl('Enable logging of HTTP page requests as the user utilizes the web interface.') . ' (' . xl('Note that Audit Logging needs to be enabled above') . ')'
-        ),
+
         'gbl_force_log_breakglass' => array(
             xl('Audit all Emergency User Queries'),
             'bool',                           // data type

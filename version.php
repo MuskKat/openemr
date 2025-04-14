@@ -16,8 +16,8 @@
 // upgrade file is the starting point for the next upgrade.
 $v_major = '7';
 $v_minor = '0';
-$v_patch = '4';
-$v_tag   = '-dev'; // minor revision number, should be empty for production releases
+$v_patch = '3';
+$v_tag   = ''; // minor revision number, should be empty for production releases
 
 // A real patch identifier. This is incremented when we release a patch for a
 // production release. Note the above $v_patch variable is a misnomer and actually
@@ -47,7 +47,7 @@ if (!empty($_ENV['OPENEMR__ENVIRONMENT']) && ($_ENV['OPENEMR__ENVIRONMENT'] === 
     $v_js_includes = md5(microtime());
 } else {
     // Change this number when bumping
-    $v_js_includes = 77;
+    $v_js_includes = 76;
 }
 
 // Do not modify below

@@ -1,10 +1,6 @@
 <?php
 
 /**
- *
- * RM - allow multple providers to have been chosen
- *
- *
  * Holds library functions (and hashes) used by the appointment reporting module
  * @package   OpenEMR
  * @link      https://www.open-emr.org
@@ -108,10 +104,12 @@ function checkEvent($recurrtype, $recurrspec)
 
 function fetchEvents($from_date, $to_date, $where_param = null, $orderby_param = null, $tracker_board = false, $nextX = 0, $bind_param = null, $query_param = null)
 {
+
     $sqlBindArray = array();
 
     if ($query_param) {
         $query = $query_param;
+
         if ($bind_param) {
             $sqlBindArray = $bind_param;
         }
@@ -136,11 +134,6 @@ function fetchEvents($from_date, $to_date, $where_param = null, $orderby_param =
             $where .= $where_param;
         }
 
-        // RM add values before more custom conditions are added to the search string
-        if ($bind_param) {
-            $sqlBindArray = array_merge($sqlBindArray, $bind_param);
-        }
-
         // Filter out appointments based on a custom module filter
         $apptFilterEvent = new AppointmentsFilterEvent(new BoundFilter());
         $apptFilterEvent = $GLOBALS["kernel"]->getEventDispatcher()->dispatch($apptFilterEvent, AppointmentsFilterEvent::EVENT_HANDLE, 10);
@@ -152,6 +145,7 @@ function fetchEvents($from_date, $to_date, $where_param = null, $orderby_param =
         if ($orderby_param) {
              $order_by = $orderby_param;
         }
+
         // Tracker Board specific stuff
         $tracker_fields = '';
         $tracker_joins = '';
@@ -168,7 +162,6 @@ function fetchEvents($from_date, $to_date, $where_param = null, $orderby_param =
         "e.pc_eventDate, e.pc_endDate, e.pc_startTime, e.pc_endTime, e.pc_duration, e.pc_recurrtype, e.pc_recurrspec, e.pc_recurrfreq, e.pc_catid, e.pc_eid, e.pc_gid, " .
         "e.pc_title, e.pc_hometext, e.pc_apptstatus, " .
         "p.fname, p.mname, p.lname, p.DOB, p.pid, p.pubpid, p.phone_home, p.phone_cell, " .
-        "p.street AS address1, p.street_line_2 AS address2," .
         "p.hipaa_allowsms, p.phone_home, p.phone_cell, p.hipaa_voice, p.hipaa_allowemail, p.email, " .
         "u.fname AS ufname, u.mname AS umname, u.lname AS ulname, u.id AS uprovider_id, " .
         "f.name, " .
@@ -182,6 +175,10 @@ function fetchEvents($from_date, $to_date, $where_param = null, $orderby_param =
         "LEFT OUTER JOIN openemr_postcalendar_categories AS c ON c.pc_catid = e.pc_catid " .
         "WHERE $where " .
         "ORDER BY $order_by";
+
+        if ($bind_param) {
+            $sqlBindArray = array_merge($sqlBindArray, $bind_param);
+        }
     }
 
 
@@ -210,7 +207,6 @@ function fetchEvents($from_date, $to_date, $where_param = null, $orderby_param =
 
         ///////
         $incX = 0;
-
         switch ($event['pc_recurrtype']) {
             case '0':
                 $events2[] = $event;
@@ -364,7 +360,6 @@ function fetchAllEvents($from_date, $to_date, $provider_id = null, $facility_id 
         array_push($sqlBindArray, $facility_id, $facility_id);
     }
 
-
     $appointments = fetchEvents($from_date, $to_date, $where, null, false, 0, $sqlBindArray);
     return $appointments;
 }
@@ -376,23 +371,9 @@ function fetchAppointments($from_date, $to_date, $patient_id = null, $provider_i
 
     $where = "";
 
- //RM multiple providers
-    if (!empty($provider_id)) {
-        // provider_id can be a string or an array
-        if (is_array($provider_id)) {
-            $quantity = sizeof($provider_id);
-            $where .= " AND ( e.pc_aid = ?";
-            for ($i = 1; $i < $quantity; $i++) {
-                $where .= " OR e.pc_aid = ? ";
-            }
-            $where .= ")";
-            foreach ($provider_id as $x) {
-                array_push($sqlBindArray, $x);
-            }
-        } else {
-            $where .= " AND e.pc_aid = ?";
-            array_push($sqlBindArray, $provider_id);
-        }
+    if ($provider_id) {
+        $where .= " AND e.pc_aid = ?";
+        array_push($sqlBindArray, $provider_id);
     }
 
     if ($patient_id) {
@@ -436,7 +417,6 @@ function fetchAppointments($from_date, $to_date, $patient_id = null, $provider_i
     if ($with_out_facility != '') {
         $where .= " AND e.pc_facility = 0";
     }
-
 
     $appointments = fetchEvents($from_date, $to_date, $where, '', $tracker_board, $nextX, $sqlBindArray);
     return $appointments;

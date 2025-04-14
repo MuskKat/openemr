@@ -54,9 +54,14 @@ class C_Pharmacy extends Controller
         return $this->fetch($GLOBALS['template_dir'] . "pharmacies/" . $this->template_mod . "_edit.html");
     }
 
-    function list_action()
+    function list_action($sort = "")
     {
-        $this->assign("pharmacies", $this->Pharmacy->pharmacies_factory());
+
+        if (!empty($sort)) {
+            $this->assign("pharmacies", $this->Pharmacy->pharmacies_factory("", $sort));
+        } else {
+            $this->assign("pharmacies", $this->Pharmacy->pharmacies_factory());
+        }
 
         //print_r(Prescription::prescriptions_factory($id));
         return $this->fetch($GLOBALS['template_dir'] . "pharmacies/" . $this->template_mod . "_list.html");

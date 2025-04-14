@@ -21,7 +21,6 @@ if ($response !== true) {
 use Dotenv\Dotenv;
 use OpenEMR\Core\Kernel;
 use OpenEMR\Core\ModulesApplication;
-use OpenEMR\Common\Logging\EventAuditLogger;
 
 // Throw error if the php openssl module is not installed.
 if (!(extension_loaded('openssl'))) {
@@ -229,6 +228,7 @@ $GLOBALS['images_static_absolute'] = "$webserver_root/public/images";
 
 //Composer vendor directory, absolute to the webserver root.
 $GLOBALS['vendor_dir'] = "$webserver_root/vendor";
+$GLOBALS['fonts_dir'] = "{$web_root}/public/fonts";
 $GLOBALS['template_dir'] = $GLOBALS['fileroot'] . "/templates/";
 $GLOBALS['incdir'] = $include_root;
 // Location of the login screen file
@@ -722,4 +722,3 @@ if (!empty($GLOBALS['user_debug']) && ((int) $GLOBALS['user_debug'] > 1)) {
     error_reporting(error_reporting() & ~E_WARNING & ~E_NOTICE & ~E_USER_WARNING & ~E_USER_DEPRECATED);
     ini_set('display_errors', 1);
 }
-EventAuditLogger::instance()->logHttpRequest();

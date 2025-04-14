@@ -156,7 +156,6 @@ This is a listing of scopes:
   - `user/document.read`
   - `user/document.write`
   - `user/drug.read`
-  - `user/employer.read`
   - `user/encounter.read`
   - `user/encounter.write`
   - `user/facility.read`
