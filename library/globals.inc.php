@@ -2199,7 +2199,7 @@ $GLOBALS_METADATA = array(
         'ip_max_failed_logins' => array(
             xl('Maximum Failed Login Attempts From IP Address'),
             'num',                            // data type
-            '100',                            // default
+            '5',                            // default
             xl('Maximum Failed Login Attempts From IP Address (0 for no maximum).')
         ),
 
