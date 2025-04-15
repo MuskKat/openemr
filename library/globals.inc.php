@@ -2140,7 +2140,7 @@ $GLOBALS_METADATA = array(
                 '19' => '19',
                 '20' => '20',
             ),
-            '9',                              // default
+            '12',                              // default
             xl('Minimum length of password.')
         ),
 
@@ -2185,7 +2185,7 @@ $GLOBALS_METADATA = array(
         'password_max_failed_logins' => array(
             xl('Maximum Failed Login Attempts For User'),
             'num',                            // data type
-            '20',                             // default
+            '5',                             // default
             xl('Maximum Failed Login Attempts For User (0 for no maximum).')
         ),
 

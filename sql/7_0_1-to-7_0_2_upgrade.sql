@@ -158,7 +158,7 @@ ALTER TABLE `users_secure` ADD `auto_block_emailed` tinyint DEFAULT 0;
 #EndIf
 
 #IfNotRow globals gl_name time_reset_password_max_failed_logins
-UPDATE `globals` SET `gl_value` = 20 WHERE `gl_name` = 'password_max_failed_logins' AND `gl_value` = 0;
+UPDATE `globals` SET `gl_value` = 5 WHERE `gl_name` = 'password_max_failed_logins' AND `gl_value` = 0;
 #EndIf
 
 #IfNotTable ip_tracking
